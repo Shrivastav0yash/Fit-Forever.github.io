@@ -1,0 +1,416 @@
+<?php
+
+$server = "localhost";
+$username = "root";
+$password = "";
+$db = "gym_data";
+
+$conn = mysqli_connect($server,$username,$password,$db) or die('connection failed');
+
+if(isset($_POST['submit'])){
+
+  $name = mysqli_real_escape_string($conn, $_POST['name']);
+  $email = mysqli_real_escape_string($conn, $_POST['email']);
+  $password = mysqli_real_escape_string($conn, $_POST['password']);
+  $pass = password_hash($password, PASSWORD_BCRYPT);
+
+  $insert = mysqli_query($conn, "INSERT INTO `gym_data`.`fit_forever` (name, email, pass, Date) VALUES ('$name', '$email', '$pass', current_timestamp());") or die('query failed');
+
+  if($insert){
+     $message[] = 'appointment made successfully!';
+  }else{
+     $message[] = 'appointment failed';
+  }
+  $conn->close();
+}
+
+  
+    
+?>
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fit Forever</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="CSS/style.css">
+
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
+
+  <!-- Navigation Bar -->
+  <header class="header fixed-top">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand logo" href="#">Fit Forever</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active " href="#BMI">BMI</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#work">Workout</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active " href="#contact">Contact Us</a>
+            </li>
+          </ul>
+
+          <div class="mx 2">
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#LoginModal">Login</button>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#SignupModal">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+  </header>
+
+  <!-- Navgation End -->
+  <!--Login-->
+
+  <!-- Button trigger modal -->
+
+  <!-- Login Modal -->
+  <div class="modal fade" id="LoginModal" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="m" id="LoginModalLabel">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form1">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form1">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Login End-->
+
+  <!--Signup start-->
+
+  <div class="modal fade" id="SignupModal" tabindex="-1" aria-labelledby="SignupModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="m" id="SignupModalLabel">Sign Up</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="row g-3" action="" method="POST">
+            <div class="col-12">
+              <label for="inputName" class="form-label">Full Name</label>
+              <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+            </div>
+            <div class="col-md-6">
+              <label for="inputEmail4" class="form-label">Email</label>
+              <input type="email" class="form-control" name="email" id="email">
+            </div>
+            <div class="col-md-6">
+              <label for="inputPassword4" class="form-label">Password</label>
+              <input type="password" class="form-control" name="password" id="password">
+            </div>
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">
+                  Check me out
+                </label>
+              </div>
+            </div>
+            <div class="col-12">
+              <button type="submit" name="submit" class="btn btn-primary">Create Account</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--signup end-->
+
+  <!-- Home Page Start-->
+
+  <section class="home" id="home">
+
+    <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-bs-ride="true">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+          aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+          aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="Images\Legs.jpg" width="1400" height="600" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <div class="Fonts">
+              <h1>Welcome to Fit Forever </h1>
+              <h4>Put all excuses aside and remember this: You are capable.</h4>
+            </div>
+            <a href="#work"><button class="btn btn-danger">Workout</button></a>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="Images\Back.jpg" width="1400" height="600" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <div class="Fonts">
+              <h1>Enhance Your Strength</h1>
+              <h4>Look in the mirror. That’s your competition</h4>\
+            </div>
+            <a href="#work"><button class="btn btn-danger">Workout</button></a>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="Images\Pull ups.jpg" width="1400" height="600" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <div class="Fonts">
+              <h1>Surpass Your Limits</h1>
+              <h4>Get comfortable with being uncomfortable!.</h4>
+            </div>
+            <a href="#work"><button class="btn btn-danger">Workout</button></a>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+  </section>
+
+  <!--Home Page end-->
+
+  <!--About Start-->
+
+  <section class="about" id="about">
+
+    <div class="container">
+
+
+      <div class="row align-items-center">
+        <h1 class="aboutxt my-5">About Us</h1>
+
+        <div class="col-md-6 image">
+          <img src="Images\logo.jpg" class="w-100 mb-5 mb-md-0" alt="">
+        </div>
+
+        <div class="col-md-6 content">
+
+          <h3 class="chandani">Family of 2 Lakhs Peoples Who really want Gyming.</h3>
+          <div class="aboutPara">
+            <p>Fit Forever was founded in August 2022 as a family owned and operated business specialising to provide
+              the
+              better exercise and routine for gym freaks.</p>
+
+            <p>Exercise can help prevent excess weight gain or help maintain weight loss. When you engage in physical
+              activity, you burn calories. The more intense the activity, the more calories you burn.</p>
+            <p>A gymnasium, also known as a gym, is a covered location for athletics. The word is derived from the
+              ancient Greek term "gymnasium".[1] They are commonly found in athletic and fitness centres, and as
+              activity and learning spaces in educational institutions. "Gym" is also slang for "fitness centre", which
+              is often an area for indoor recreation</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+  <!--About End-->
+
+  <!--Workout Start-->
+
+  <section class="work" id="work">
+
+    <h1 class="workhead">Workout</h1>
+
+    <div class="container ">
+
+
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+        <div class="col">
+          <div class="card shadow-sm">
+            <a href="chest.php"><img src="Images\Chest logo.jpg" width="100%" height="225" alt=""></a>
+            <div class="card-body">
+              <p class="card-text">There are so many chest exercises and workouts to try, from bodyweight staples to
+                twists on dumbbell classics.</p>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card shadow-sm">
+
+            <a href="back.php"><img src="Images\Back logo.jpg" width="100%" height="225" alt=""></a>
+            <div class="card-body">
+              <p class="card-text">A big, strong back can take you far in your athletic endeavors. The back muscles help
+                you to twist your torso, pull your arms in.</p>
+
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+
+            <a href="legs.php"><img src="Images\Legs Logo.jpg" width="100%" height="225" alt=""></a>
+
+            <div class="card-body">
+              <p class="card-text">Many bodybuilders only train their legs once a week, that single skipped workout can
+                mean that your legs go workout-free for two weeks.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+
+            <a href="arms.php"><img src="Images\Arms logo.jpg" width="100%" height="225" alt=""></a>
+            <div class="card-body">
+              <p class="card-text">Arm strengthening is a cornerstone of any comprehensive fitness program. Strong arms
+                are not just about appearances.</p>
+
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+
+            <a href="abs.php"><img src="Images\Abs logo.jpg" width="100%" height="225" alt=""></a>
+            <div class="card-body">
+              <p class="card-text">If you’re looking to improve your abs, there are a huge variety of abs workouts that
+                can help you achieve that goal. </p>
+
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+
+            <a href="shoulder.php"><img src="Images\Shoulder logo.jpg" width="100%" height="225" alt=""></a>
+            <div class="card-body">
+              <p class="card-text">The best shoulder workout will strengthen the rotator cuff, as this muscle group is
+                one of the most prone to injuries.</p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- Workout End-->
+
+  <!--BMI Start-->
+  <section class="BMI" id="BMI">
+    <h1 class="BMIhead">Calculate BMI</h1>
+    <div class="calculator-container">
+      <p class="bmip">Height in meters:</p>
+      <input class="height-input-field" type="text">
+      <p class="bmip">weight in kilograms:</p>
+      <input class="weight-input-field" type="text"><br><br>
+      <button class="calculate">Calculate</button>
+    </div>
+    <h3 class="result"></h3>
+    <h4 class="result-statement"></h4>
+    <script src="Javascript\BMI.js"></script>
+
+  </section>
+
+  <!--BMI End-->
+
+  <!--Contact Start-->
+
+  <section class="contact" id="contact">
+
+    <h1 class="conthead">Contact</h1>
+
+    <div class="row align-items-md-stretch">
+      <div class="col-md-6">
+        <div class="h-100 p-5 text-bg-dark rounded-3">
+          <h2 class="conth">Phone Number:-</h2>
+          <p class="contp1">+91-89908-90990<br>+91-98765-43210<br></p>
+          <p class="contp2">Fit Forever helps you to enhance your skills and learn exercises which is helpful to develop
+            your body.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="h-100 p-5 bg-light border rounded-3">
+          <h2 class="conth">Email:-</h2>
+          <p class="contp1">Fitforever007@gamil.com<br>Fitforever999@gamil.com <br>CEO: Yash Shrivastav <br> COO :
+            Siddharth Singh <br>CFO: Prem Kumar Sharma </p>
+          <p class="contp2">If you need help about any exercise contact us.Our tech team contact you very
+            soon.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!--Contact End-->
+
+
+
+  <script src="Javascript\script.js"></script>
+
+
+</body>
+
+
+
+</html>

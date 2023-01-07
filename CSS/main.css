@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300&family=Signika+Negative&display=swap');
+
+/*body{
+    background-color: rgb(183, 183, 183);
+}*/
+
+/*.h{
+    font-family: 'Permanent Marker', cursive;
+    text-decoration: underline;
+    color: black;
+}*/
+
+
+.exetxt{
+    font-family: 'Permanent Marker', cursive;
+    text-align: center;
+    text-decoration: underline rgb(13, 228, 23);
+}
+
+.exePara{
+    font-size: 20px;
+    font-family: 'Kalam', cursive;
+    font-weight: bold;
+}
+.exe1{
+    background-color: rgb(183, 183, 183);
+    border: 2px black;
+}
+.exe2{
+    background-color: rgb(160, 160, 160);
+}
+/*.heading{
+    margin-top:50px;
+    font-family: 'Permanent Marker', cursive;
+    color: rgb(37, 214, 90);
+    text-align: center;
+    text-decoration: underline;
+    background-color:rgba(51, 13, 102, 0.144) ;
+}*/
+.prem{
+    font-family: 'Signika Negative', sans-serif;
+    text-decoration: underline;
+    font-weight: bold;
+    color: rgb(74, 41, 194);
+    
+}
